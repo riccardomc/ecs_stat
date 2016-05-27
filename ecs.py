@@ -24,24 +24,6 @@ class ECS(object):
     def refresh(self):
         self.clusters = self.describe_clusters()
 
-    def print_tree(self):
-        cluster_count = 0
-        for cluster in self.clusters:
-            print 'Cluster %d %s\n' % (cluster_count, cluster)
-            service_count = 0
-            for service in cluster.services:
-                print ' Service %d %s \n' % (service_count, service)
-                service_count += 1
-                task_counter = 0
-                for task in service.tasks:
-                    print '  Task %d %s' % (task_counter, task)
-                    task_counter += 1
-                    container_count = 0
-                    for container in task.containers:
-                        print '   Container %d %s' % (container_count, container)
-                        container_count += 1
-                    print
-
     def get_container_by_branch(self, cluster, service, task, container):
         target_cluster = self.clusters[cluster]
         target_service = target_cluster.services[service]

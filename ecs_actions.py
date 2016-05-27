@@ -40,6 +40,25 @@ def tail_logs(container, ssh_private_key=None, ssh_username='ec2-user'):
         sys.stdout.write(line)
 
 
+def print_ecs_tree(ecs):
+    cluster_count = 0
+    for cluster in ecs.clusters:
+        print 'Cluster %d %s\n' % (cluster_count, cluster)
+        service_count = 0
+        for service in cluster.services:
+            print ' Service %d %s \n' % (service_count, service)
+            service_count += 1
+            task_counter = 0
+            for task in service.tasks:
+                print '  Task %d %s' % (task_counter, task)
+                task_counter += 1
+                container_count = 0
+                for container in task.containers:
+                    print '   Container %d %s' % (container_count, container)
+                    container_count += 1
+                print
+
+
 def guess_ssh_private_key(instance):
     guessed_private_key = '%s.pem' % instance.KeyName
     return path.expanduser(path.join('~/.ssh/', guessed_private_key))

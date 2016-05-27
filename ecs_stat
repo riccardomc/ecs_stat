@@ -13,15 +13,16 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+    my_ecs = ECS()
     if (args.tail_logs):
         [cluster, service, task, container] = args.tail_logs.split(',')
-        container = ECS().get_container_by_branch(int(cluster),
-                                                  int(service),
-                                                  int(task),
-                                                  int(container))
+        container = my_ecs.get_container_by_branch(int(cluster),
+                                                   int(service),
+                                                   int(task),
+                                                   int(container))
         print 'Going to tail logs for: %s' % container
         from time import sleep
         sleep(1)
         ecs_actions.tail_logs(container)
     else:
-        ECS().print_tree()
+        ecs_actions.print_ecs_tree(my_ecs)
