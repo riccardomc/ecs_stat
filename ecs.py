@@ -66,8 +66,10 @@ class Cluster(object):
         if len(services) == 0:
             services = self.list_services()
 
-        service_dicts = ecs.describe_services(
-                cluster=self.clusterName, services=services)['services']
+        service_dicts = []
+        if len(services) > 0:
+            service_dicts = ecs.describe_services(
+                    cluster=self.clusterName, services=services)['services']
 
         return [Service(service_dict, self) for service_dict in service_dicts]
 
