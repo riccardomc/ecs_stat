@@ -3,4 +3,4 @@
 tests: clean
 	@nosetests -sv ./tests/
 clean:
-	find . -name '*.pyc' | xargs rm
+	find . -name '*.pyc' | xargs rm -f
