@@ -2,8 +2,8 @@
 
 import argparse
 
-from ecs import ECS
-import ecs_actions
+from ecs_stat.ecs import ECS
+from ecs_stat import ecs_actions
 
 if __name__ == '__main__':
 
