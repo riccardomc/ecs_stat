@@ -143,9 +143,13 @@ class Service(object):
     def describe_tasks(self, tasks=[]):
         if len(tasks) == 0:
             tasks = self.list_tasks()
-        task_dicts = ecs.describe_tasks(
-                cluster=self.clusterArn.split('/')[1],
-                tasks=tasks)['tasks']
+
+        task_dicts = []
+        if len(tasks) > 0:
+            task_dicts = ecs.describe_tasks(
+                    cluster=self.clusterArn.split('/')[1],
+                    tasks=tasks)['tasks']
+
         return [Task(task_dict, self) for task_dict in task_dicts]
 
     def to_dict(self):
