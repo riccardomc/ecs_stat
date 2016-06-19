@@ -82,9 +82,11 @@ class Cluster(object):
         if (len(container_instances) == 0):
             container_instances = self.list_container_instances()
 
-        container_instances_dicts = ecs.describe_container_instances(
-                containerInstances=container_instances,
-                cluster=self.clusterName)['containerInstances']
+        container_instances_dicts = []
+        if (len(container_instances) > 0):
+            container_instances_dicts = ecs.describe_container_instances(
+                    containerInstances=container_instances,
+                    cluster=self.clusterName)['containerInstances']
 
         return [ContainerInstance(container_instance) for
                 container_instance in container_instances_dicts]
