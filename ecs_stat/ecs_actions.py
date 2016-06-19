@@ -44,6 +44,7 @@ def print_ecs_tree(ecs):
     cluster_count = 0
     for cluster in ecs.clusters:
         print 'Cluster %d %s\n' % (cluster_count, cluster)
+        cluster_count += 1
         service_count = 0
         for service in cluster.services:
             print ' Service %d %s \n' % (service_count, service)
