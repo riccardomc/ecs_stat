@@ -19,6 +19,9 @@ python ecs_stat
 
 ## Usage
 
+You might have to set a default region (i.e. `AWS_DEFAULT_REGION` env var), for
+boto to be happy.
+
 ```
 usage: ecs_stat [-h] [--tail_logs TAIL_LOGS]
 
@@ -30,3 +33,12 @@ optional arguments:
                         <cluster_n>,<service_n>,<task_n>,<container_n>
 
 ```
+
+## Status
+
+I haven't been working on this project for a long time, so some AWS APIs might
+have changed in the meanwhile.
+
+My plan was to add proper testing with [moto](https://github.com/spulec/moto)
+and for this I've [improved](https://github.com/spulec/moto/pull/635) the ECS
+support in moto.
