@@ -82,9 +82,11 @@ class Cluster(object):
         if (len(container_instances) == 0):
             container_instances = self.list_container_instances()
 
-        container_instances_dicts = ecs.describe_container_instances(
-                containerInstances=container_instances,
-                cluster=self.clusterName)['containerInstances']
+        container_instances_dicts = []
+        if (len(container_instances) > 0):
+            container_instances_dicts = ecs.describe_container_instances(
+                    containerInstances=container_instances,
+                    cluster=self.clusterName)['containerInstances']
 
         return [ContainerInstance(container_instance) for
                 container_instance in container_instances_dicts]
@@ -141,9 +143,13 @@ class Service(object):
     def describe_tasks(self, tasks=[]):
         if len(tasks) == 0:
             tasks = self.list_tasks()
-        task_dicts = ecs.describe_tasks(
-                cluster=self.clusterArn.split('/')[1],
-                tasks=tasks)['tasks']
+
+        task_dicts = []
+        if len(tasks) > 0:
+            task_dicts = ecs.describe_tasks(
+                    cluster=self.clusterArn.split('/')[1],
+                    tasks=tasks)['tasks']
+
         return [Task(task_dict, self) for task_dict in task_dicts]
 
     def to_dict(self):
@@ -300,4 +306,4 @@ class EC2Instance(object):
 
     def __str__(self):
         return str('InstanceId: %s DNS: %s KeyName: %s' % (
-            self.InstanceId, self.PublicIpAddress, self.KeyName))
+            self.InstanceId, self.PublicIpAddress, self.__dict__.get('KeyName', None)))
