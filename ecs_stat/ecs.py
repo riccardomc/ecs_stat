@@ -306,4 +306,4 @@ class EC2Instance(object):
 
     def __str__(self):
         return str('InstanceId: %s DNS: %s KeyName: %s' % (
-            self.InstanceId, self.PublicIpAddress, self.KeyName))
+            self.InstanceId, self.PublicIpAddress, self.__dict__.get('KeyName', None)))
